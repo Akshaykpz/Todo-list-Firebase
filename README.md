@@ -1,77 +1,64 @@
-# Todo Firebase App (Hiring Task)
+# Todo App
 
-Flutter app built with:
-- Riverpod
-- Retrofit
-- Dio
-- Freezed
-- Json Serializable
-- Firebase Auth (REST)
-- Firebase Realtime Database (REST)
-- Clean Architecture
+A Flutter Todo application built using **Clean Architecture**, **Riverpod**, **Retrofit**, and **Firebase Authentication**.
 
-## Project Structure
+## Features
 
-```text
-lib/
-  src/
-    core/
-      config/
-      error/
-      network/
-    features/
-      auth/
-        data/
-        domain/
-        presentation/
-      todos/
-        data/
-        domain/
-        presentation/
-```
+- User sign up and login with Firebase Authentication
+- Create, update, delete todos
+- View todo list
+- Clean and scalable project structure
+- State management using Riverpod
+- API integration using Retrofit
 
-## Firebase Setup
+## Tech Stack
 
-1. Create a Firebase project.
-2. Enable `Authentication -> Sign-in method -> Email/Password`.
-3. Create `Realtime Database`.
-4. Use database URL format:
-   `https://<db-name>.<region>.firebasedatabase.app/`
+- **Flutter**
+- **Dart**
+- **Riverpod**
+- **Retrofit**
+- **Firebase Auth**
+- **Clean Architecture**
 
-Recommended database rules for this task:
+## Architecture
 
-```json
-{
-  "rules": {
-    "users": {
-      "$uid": {
-        ".read": "auth != null && auth.uid === $uid",
-        ".write": "auth != null && auth.uid === $uid"
-      }
-    }
-  }
-}
-```
+This project follows **Clean Architecture** for better scalability, maintainability, and testability.
 
-## Run
+### Layers
+
+- **Presentation**
+  - UI
+  - Screens
+  - Widgets
+  - Riverpod providers
+
+- **Domain**
+  - Entities
+  - Repository contracts
+  - Use cases
+
+- **Data**
+  - Models
+  - Repository implementations
+  - Remote/local data sources
+
+## Folder Structure
 
 ```bash
-flutter pub get
-dart run build_runner build --delete-conflicting-outputs
-flutter run --dart-define=FIREBASE_API_KEY=YOUR_WEB_API_KEY --dart-define=FIREBASE_DATABASE_URL=https://YOUR_DB_NAME.YOUR_REGION.firebasedatabase.app/ --dart-define=FIREBASE_PROJECT_ID=YOUR_PROJECT_ID --dart-define=FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID --dart-define=FIREBASE_APP_ID_ANDROID=YOUR_ANDROID_APP_ID
-```
-
-Use the app-id flag for your target:
-- Android: `FIREBASE_APP_ID_ANDROID`
-- iOS: `FIREBASE_APP_ID_IOS`
-- Web: `FIREBASE_APP_ID_WEB`
-- Windows: `FIREBASE_APP_ID_WINDOWS`
-- macOS: `FIREBASE_APP_ID_MACOS`
-
-## Notes
-
-- Auth session is in-memory for this task.
-- Todos are stored per user in:
-  `users/{uid}/todos/{todoId}`.
-- API communication is done via Firebase REST endpoints with Dio + Retrofit.
-- Since `Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)` is used, you must provide all required `--dart-define` values for your target platform.
+lib/
+├── core/
+├── features/
+│   └── todo/
+│       ├── data/
+│       │   ├── datasource/
+│       │   ├── models/
+│       │   └── repositories/
+│       ├── domain/
+│       │   ├── entities/
+│       │   ├── repositories/
+│       │   └── usecases/
+│       └── presentation/
+│           ├── providers/
+│           ├── screens/
+│           └── widgets/
+├── main.dart
